@@ -1,0 +1,151 @@
+% ==================================================
+% ========== Draft: Mirror Descent in Continuous Time
+% ==================================================
+% Last modified: 2017 February 01
+
+
+\documentclass[12pt]{report}
+\usepackage{amsmath,amssymb,amscd,amsthm}
+\usepackage{mathdef-omar}
+\usepackage{enumitem}
+
+
+% ========== Pstricks
+%\usepackage{pst-all}
+
+
+% ========== Page formats
+\setlength{\oddsidemargin}{1.5cm}
+\setlength{\textwidth}{14cm}
+\setlength{\topmargin}{-.5cm}
+\setlength{\textheight}{22cm}
+
+
+% ========== Theorem-like stuff 
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{coro}{Corollary}
+\newtheorem{propo}{Proposition}
+\newtheorem*{claim}{Claim}
+%
+\theoremstyle{definition}
+\newtheorem{defi}{Definition}
+\newtheorem{example}{Example}
+%
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{remarks}{Remarks}
+\newtheorem*{note}{Note}
+\newtheorem*{notes}{Notes}
+\newtheorem*{notation}{Notation}
+\newtheorem*{notations}{Notations}
+%
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{exercise}[theorem]{Exercise}
+%
+\renewcommand{\proof}{\noindent {\sc Proof.}\quad}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+% ==========
+
+
+
+
+
+\begin{document}  % ========== BEGIN DOCUMENT
+
+Some calculations about the mirror descent (MD) algorithm.
+
+\bigskip
+
+\noindent
+The setting and notations...
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+\item The potential $R : \R^d \to \R$, a Legendre function.
+\item Its convex conjugate: $R^{*}(u) = \sup_{x} \{ \ab{u,x} - R(x)\}$.
+\item The ``mirror maps'' $\nabla R : \R^d \to \R^d$ and $\nabla R^{*} : \R^d \to \R^d$.
+\item The loss functions $(\ell_t)$, each $\ell_t : \R^d \to \R$.
+\item Time index $t \in \{ 0,1,2,\ldots \}$ for discrete time, $t \in [0,\infty)$ for continuous time.
+\item $x$, $x_t$ (discrete time), $x(t)$ (continuous time) elements of the primal space.
+\item $u$, $u_t$ (discrete time), $u(t)$ (continuous time) elements of the dual space.
+\end{itemize}
+The MD algorithm (discrete time) uses the initialization and updates
+\begin{align*}
+x_1 &= \arg\min R(x)\,, \\
+x_{t+1} &= \arg\min_{x \in \R^d} \Bigl\{ \ab{\nabla\ell_t(x_{t}), x} + \eta D_{R}(x, x_{t})\Bigr\}\,.
+\end{align*}
+Here $D_{R}(x,y)$ stands for the Bregman divergence, whose definition is recalled now:
+$$
+D_{R}(a_{1}, a_{2}) = R(a_{1}) - R(a_{2}) - \ab{\nabla R(a_2), a_{1} - a_{2}}\,.
+$$
+The order of the arguments matters.
+Let's say $D_{R}(a_{1},a_{2})$ is ``supported at $a_{2}$'' 
+(its definition uses a tangent supported at $a_{2}$).
+To minimize clutter let's denote by $\partial_{i}$ the partial derivative (operator)
+with respect to the $i$-th argument. So for instance:
+\begin{align*}
+\partial_{1} D_{R}(a_{1}, a_{2}) &= \nabla R(a_{1}) - \nabla R(a_{2})\,, \\[1mm]
+\partial_{2} D_{R}(a_{1}, a_{2}) &= - \nabla^2 R(a_{2})(a_{1} - a_{2})\,.
+\end{align*}
+A couple of equations in discrete time:
+\begin{align*}
+u_{t+1} &= u_{t} - \eta \nabla \ell_{t}(x_{t}) \label{eq.dtime.1} \tag{1dt} \\
+x_{t} &= \nabla R^{*}(u_{t})\,. \label{eq.dtime.2} \tag{2dt}
+\end{align*}
+Analogous equations in continuous time:
+\begin{align*}
+u'(t) &= - \eta \nabla \ell_{t}(x(t)) \label{eq.ctime.1} \tag{1ct} \\
+x(t) &= \nabla R^{*}(u(t))\,. \label{eq.ctime.2} \tag{2ct}
+\end{align*}
+For fixed $x^{*} \in \R^d$, $u^{*} = \nabla R(x^{*})$,
+\setcounter{equation}{2}
+\begin{equation}
+\ell_{t}(x^{*}) \geq \ell_{t}(x(t)) + \ab{\nabla\ell_t(x(t)), x^{*} - x(t)} \label{eq.loss}
+\end{equation}
+From \eqref{eq.ctime.1} we get $\nabla \ell_{t}(x(t)) = -u'(t)/\eta$, 
+and plugging this in \eqref{eq.loss} we get:
+$$
+\ell_{t}(x^{*}) \geq \ell_{t}(x(t)) - \frac{1}{\eta} \ab{u'(t), x^{*} - x(t)}\,.
+$$
+Rearranging:
+\begin{equation}
+\ell_{t}(x(t)) - \ell_{t}(x^{*}) \leq  \frac{1}{\eta} \ab{u'(t), x^{*} - x(t)}\,, \label{eq.loss.prep}
+\end{equation}
+and the claim is that the RHS is the derivative of a Bregman divergence.
+
+\bigskip
+
+On one hand, by the chain rule and the symmetry of the Hessian:
+\begin{align*}
+\frac{d}{dt} D_{R^{*}}(u^{*}, u(t))
+&= \ab{ \partial_{2} D_{R^{*}}(u^{*}, u(t)), u'(t)} \\[1mm]
+&= - \ab{ \nabla^2 R^{*}(u(t))(u^{*} -u(t)), u'(t) } \\[1mm]
+&= - \ab{ u^{*} -u(t), \nabla^2 R^{*}(u(t)) u'(t) } \\[1mm]
+&= - \ab{u^{*} - u(t), x'(t)}\,.
+\end{align*}
+On the other hand,
+\begin{align*}
+\frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)}
+&= - \ab{ u'(t), x^{*} - x(t)} - \ab{ u^{*} -u(t), x'(t) }\,.
+\end{align*}
+Combining the two:
+\begin{align*}
+\ab{ u'(t), x^{*} - x(t)} 
+&= - \ab{ u^{*} -u(t), x'(t) } - \frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)} \\[1mm]
+&= \frac{d}{dt} D_{R^{*}}(u^{*}, u(t)) - \frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)}\,.
+\end{align*}
+Then \eqref{eq.loss.prep} can be written as
+\begin{equation*}
+\ell_{t}(x(t)) - \ell_{t}(x^{*}) 
+\leq  \frac{1}{\eta} \frac{d}{dt} \Bigl( D_{R^{*}}(u^{*}, u(t)) - \ab{u^{*} - u(t), x^{*} - x(t)} \Bigr)
+\end{equation*}
+After integrating (???)
+$$
+\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x^{*})] dt
+\leq \frac{1}{\eta} \bigl[ D_{R^{*}}(u^{*}, u(T)) - D_{R^{*}}(u^{*}, u(0)) \bigr]
+$$
+Note: the term 
+$\ab{u^{*} - u(t), x^{*} - x(t)} = \ab{\nabla R(x^{*}) - \nabla R(x(t)), x^{*} - x(t)}$
+is the sum of $D_{R}(x^{*}, x(t))$ and $D_{R}(x(t), x^{*})$, so it is non-negative.
+
+\end{document}  % ========== END DOCUMENT
