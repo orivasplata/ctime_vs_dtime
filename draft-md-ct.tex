@@ -94,7 +94,7 @@ x_{t} &= \nabla R^{*}(u_{t})\,. \label{eq.dtime.2} \tag{2dt}
 \end{align*}
 Analogous equations in continuous time:
 \begin{align*}
-u'(t) &= - \eta \nabla \ell_{t}(x(t)) \label{eq.ctime.1} \tag{1ct} \\
+\dot{u}(t) &= - \eta \nabla \ell_{t}(x(t)) \label{eq.ctime.1} \tag{1ct} \\
 x(t) &= \nabla R^{*}(u(t))\,. \label{eq.ctime.2} \tag{2ct}
 \end{align*}
 For fixed $x^{*} \in \R^d$, $u^{*} = \nabla R(x^{*})$,
@@ -102,14 +102,14 @@ For fixed $x^{*} \in \R^d$, $u^{*} = \nabla R(x^{*})$,
 \begin{equation}
 \ell_{t}(x^{*}) \geq \ell_{t}(x(t)) + \ab{\nabla\ell_t(x(t)), x^{*} - x(t)} \label{eq.loss}
 \end{equation}
-From \eqref{eq.ctime.1} we get $\nabla \ell_{t}(x(t)) = -u'(t)/\eta$, 
+From \eqref{eq.ctime.1} we get $\nabla \ell_{t}(x(t)) = -\dot{u}(t)/\eta$, 
 and plugging this in \eqref{eq.loss} we get:
 $$
-\ell_{t}(x^{*}) \geq \ell_{t}(x(t)) - \frac{1}{\eta} \ab{u'(t), x^{*} - x(t)}\,.
+\ell_{t}(x^{*}) \geq \ell_{t}(x(t)) - \frac{1}{\eta} \ab{\dot{u}(t), x^{*} - x(t)}\,.
 $$
 Rearranging:
 \begin{equation}
-\ell_{t}(x(t)) - \ell_{t}(x^{*}) \leq  \frac{1}{\eta} \ab{u'(t), x^{*} - x(t)}\,, \label{eq.loss.prep}
+\ell_{t}(x(t)) - \ell_{t}(x^{*}) \leq  \frac{1}{\eta} \ab{\dot{u}(t), x^{*} - x(t)}\,, \label{eq.loss.prep}
 \end{equation}
 and the claim is that the RHS is the derivative of a Bregman divergence.
 
@@ -118,34 +118,42 @@ and the claim is that the RHS is the derivative of a Bregman divergence.
 On one hand, by the chain rule and the symmetry of the Hessian:
 \begin{align*}
 \frac{d}{dt} D_{R^{*}}(u^{*}, u(t))
-&= \ab{ \partial_{2} D_{R^{*}}(u^{*}, u(t)), u'(t)} \\[1mm]
-&= - \ab{ \nabla^2 R^{*}(u(t))(u^{*} -u(t)), u'(t) } \\[1mm]
-&= - \ab{ u^{*} -u(t), \nabla^2 R^{*}(u(t)) u'(t) } \\[1mm]
-&= - \ab{u^{*} - u(t), x'(t)}\,.
+&= \ab{ \partial_{2} D_{R^{*}}(u^{*}, u(t)), \dot{u}(t)} \\[1mm]
+&= - \ab{ \nabla^2 R^{*}(u(t))(u^{*} -u(t)), \dot{u}(t) } \\[1mm]
+&= - \ab{ u^{*} -u(t), \nabla^2 R^{*}(u(t)) \dot{u}(t) } \\[1mm]
+&= - \ab{u^{*} - u(t), \dot{x}(t)}\,.
 \end{align*}
 On the other hand,
 \begin{align*}
 \frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)}
-&= - \ab{ u'(t), x^{*} - x(t)} - \ab{ u^{*} -u(t), x'(t) }\,.
+&= - \ab{ \dot{u}(t), x^{*} - x(t)} - \ab{ u^{*} -u(t), \dot{x}(t) }\,.
 \end{align*}
 Combining the two:
 \begin{align*}
-\ab{ u'(t), x^{*} - x(t)} 
-&= - \ab{ u^{*} -u(t), x'(t) } - \frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)} \\[1mm]
-&= \frac{d}{dt} D_{R^{*}}(u^{*}, u(t)) - \frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)}\,.
+\ab{ \dot{u}(t), x^{*} - x(t)} 
+&= - \ab{ u^{*} -u(t), \dot{x}(t) } - \frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)} \\[1mm]
+%&= \frac{d}{dt} D_{R^{*}}(u^{*}, u(t)) - \frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)}\,.
+&= \frac{d}{dt} \Bigl( D_{R^{*}}(u^{*}, u(t)) - \ab{u^{*} - u(t), x^{*} - x(t)} \Bigr)\,.
 \end{align*}
+Note that the term 
+$\ab{u^{*} - u(t), x^{*} - x(t)} = \ab{\nabla R(x^{*}) - \nabla R(x(t)), x^{*} - x(t)}$
+is the sum of $D_{R}(x^{*}, x(t))$ and $D_{R}(x(t), x^{*})$.
+This is a general property of Bregman divergences that can be obtained directly from the definition:
+$$
+D_{R}(a_{1}, a_{2}) + D_{R}(a_{2}, a_{1})
+= \ab{\nabla R(a_{1}) - \nabla R(a_{2}), a_{1} - a_{2}}\,.
+$$
 Then \eqref{eq.loss.prep} can be written as
 \begin{equation*}
 \ell_{t}(x(t)) - \ell_{t}(x^{*}) 
-\leq  \frac{1}{\eta} \frac{d}{dt} \Bigl( D_{R^{*}}(u^{*}, u(t)) - \ab{u^{*} - u(t), x^{*} - x(t)} \Bigr)
+\leq  \frac{1}{\eta} \frac{d}{dt} \Bigl( D_{R^{*}}(u^{*}, u(t)) - D_{R}(x^{*}, x(t)) - D_{R}(x(t), x^{*})\Bigr)\,.
 \end{equation*}
-After integrating (???)
-$$
+After integrating:
+\begin{align*}
 \int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x^{*})] dt
-\leq \frac{1}{\eta} \bigl[ D_{R^{*}}(u^{*}, u(T)) - D_{R^{*}}(u^{*}, u(0)) \bigr]
-$$
-Note: the term 
-$\ab{u^{*} - u(t), x^{*} - x(t)} = \ab{\nabla R(x^{*}) - \nabla R(x(t)), x^{*} - x(t)}$
-is the sum of $D_{R}(x^{*}, x(t))$ and $D_{R}(x(t), x^{*})$, so it is non-negative.
+&\leq \frac{1}{\eta} \bigl[ D_{R^{*}}(u^{*}, u(T)) - D_{R}(x^{*}, x(T)) - D_{R}(x(T), x^{*}) \\
+&\hspace{10mm}- D_{R^{*}}(u^{*}, u(0)) + D_{R}(x^{*}, x(0)) + D_{R}(x(0), x^{*}) \bigr]
+\end{align*}
+
 
 \end{document}  % ========== END DOCUMENT
