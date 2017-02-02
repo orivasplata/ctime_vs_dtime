@@ -1,0 +1,237 @@
+% ==================================================
+% ========== Custom commands and shortcuts 
+% ========== Author: Omar Rivasplata 
+% ==================================================
+% Last modified: 28 June 2012
+
+
+% ========== Sets of numbers
+% what the heck to use for the set of positive integers ??
+\newcommand{\N}{\mathbb{N}}  % naturals (nonnegative integers)
+\newcommand{\Z}{\mathbb{Z}}  % integers
+\newcommand{\Q}{\mathbb{Q}}  % rationals
+\newcommand{\R}{\mathbb{R}}  % reals
+\newcommand{\C}{\mathbb{C}}  % complex
+\newcommand{\K}{\mathbb{K}}  % real or complex field
+\newcommand{\F}{\mathbb{F}}  % a generic field
+
+% ========== shortcuts for mathcaligraphic and mathblackboard
+\newcommand{\mcal}[1]{\mathcal{#1}}
+\newcommand{\mbb}[1]{\mathbb{#1}}
+
+
+% ========== various commands and operators 
+\newcommand{\grad}{\operatorname{grad}} % gradient
+\newcommand{\diver}{\operatorname{div}} % divergence
+\newcommand{\curl}{\operatorname{curl}} % curl
+\newcommand{\sign}{\operatorname{sign}} % sign function
+%
+\newcommand{\id}{\operatorname{id}} % identity
+\newcommand{\Id}{\operatorname{Id}} % Identity
+%
+\newcommand{\kernel}{\operatorname{Ker}} % kernel of a linear map
+\newcommand{\image}{\operatorname{Im}} % image of a linear map
+%
+\newcommand{\closure}{\operatorname{clos}} % closure of a set
+\newcommand{\interior}{\operatorname{int}} % interior of a set
+%
+\newcommand{\esssup}{\operatorname{ess\,sup}} % essential supremum
+\newcommand{\essinf}{\operatorname{ess\,inf}} % essential infimum
+%
+\newcommand{\support}{\operatorname{supp}} % support
+\newcommand{\supp}{\operatorname{supp}} % support - old version, may need it for old files
+%
+
+% ========== stuff related to integrals
+\newcommand{\dd}{\, d} % For "differential", as used in integrals
+%
+\newcommand{\upsum}% upper sum sign 
+{\ensuremath \mkern5.4mu \overline{\vphantom{S}\mkern8mu} \mkern-11mu S}
+%
+\newcommand{\lowsum}% lower sum sign 
+{\ensuremath \mkern3.4mu \underline{\vphantom{S}\mkern8mu} \mkern-9mu S}
+%
+\newcommand{\upint}% upper integral sign 
+{\ensuremath \mkern10.4mu \overline{\vphantom{\int}\mkern7mu} \mkern-21mu\int}
+%
+\newcommand{\upintwdomain}[1]% upper integral sign w/domain
+{\ensuremath \mkern10.4mu \overline{\vphantom{\int}\mkern7mu} \mkern-21mu\int_{#1}}
+%
+\newcommand{\textupint}% upper integral sign inside text
+{\textstyle \mkern5mu \overline{\vphantom{\int}\mkern6mu} \mkern-14mu\intop\mkern0mu}
+%
+\newcommand{\textupintwdomain}[1]% upper integral sign inside text w/domain
+{\textstyle \mkern5mu \overline{\vphantom{\int}\mkern6mu} \mkern-14mu\intop_{#1}}
+%
+\newcommand{\lowint}% lower integral sign
+{\ensuremath \underline{\vphantom{\int}\mkern7mu} \mkern-9mu\int}
+%
+\newcommand{\lowintwdomain}[1]% lower integral sign w/domain
+{\ensuremath \underline{\vphantom{\int}\mkern7mu} \mkern-9mu\int_{#1}}
+%
+\newcommand{\textlowint}% lower integral sign inside text
+{\textstyle \mkern3mu \underline{\vphantom{\int}\mkern6mu} \mkern-8.5mu\intop}
+%
+\newcommand{\textlowintwdomain}[1]% lower integral sign inside text w/domain
+{\textstyle \mkern3mu \underline{\vphantom{\int}\mkern6mu} \mkern-8.5mu\intop_{#1}}
+%
+
+% ========== Complex number stuff 
+\newcommand{\im}{\operatorname{Im}} % imaginary part
+\newcommand{\re}{\operatorname{Re}} % real part
+\newcommand{\conjugate}[1]{\overline{#1}} % complex conjugate
+
+% ========== Cardinality 
+\newcommand{\card}{\operatorname{card}} % cardinality of a set (as "operator")
+\newcommand{\cardinal}[1]{\lvert #1\rvert} % cardinality (with bars)
+\newcommand{\bigcardinal}[1]{\bigl\lvert #1 \bigr\rvert} % big cardinality (with bars)
+\newcommand{\Bigcardinal}[1]{\Bigl\lvert #1 \Bigr\rvert} % Big cardinality (with bars)
+\newcommand{\biggcardinal}[1]{\biggl\lvert #1 \biggr\rvert} % bigg cardinality (with bars)
+\newcommand{\Biggcardinal}[1]{\Biggl\lvert #1 \Biggr\rvert} % Bigg cardinality (with bars)
+
+% ========== "Such that" 
+\newcommand{\st}{\hspace{2mm}\text{s.t.}\hspace{2mm}} % "such that" abbreviature s.t.
+\newcommand{\stcolon}{\hspace{1mm}:\hspace{1mm}} % "such that" as colon
+\newcommand{\stvert}{\hspace{2mm}\vert\hspace{2mm}} % "such that" vertical bar
+\newcommand{\bigstvert}{\hspace{2mm}\big\vert\hspace{2mm}} % big "such that" vertical bar
+\newcommand{\Bigstvert}{\hspace{2mm}\Big\vert\hspace{2mm}} % Big "such that" vertical bar
+\newcommand{\biggstvert}{\hspace{2mm}\bigg\vert\hspace{2mm}} % bigg "such that" vertical bar
+\newcommand{\Biggstvert}{\hspace{2mm}\Bigg\vert\hspace{2mm}} % Bigg "such that" vertical bar
+%
+\newcommand{\eqdef}{\stackrel{\text{\small{def}}}{=}} % equal sign with "def" on top
+\newcommand{\tq}{\hspace{0.2cm}\vert\hspace{0.2cm}} % tal que, may need it for old files
+
+% ========== Distance 
+\newcommand{\distance}{\operatorname{\mathit{d}}} % distance
+\newcommand{\dist}{\operatorname{dist}} % dist
+%\newcommand{\dist}[2]{\operatorname{d}(#1,#2)} % distance
+
+% ========== Absolute value 
+\newcommand{\abs}[1]{\lvert #1 \rvert} % absolute value
+\newcommand{\bigabs}[1]{\bigl\lvert #1 \bigr\rvert} % big absolute value
+\newcommand{\Bigabs}[1]{\Bigl\lvert #1 \Bigr\rvert} % Big absolute value
+\newcommand{\biggabs}[1]{\biggl\lvert #1 \biggr\rvert} % bigg absolute value
+\newcommand{\Biggabs}[1]{\Biggl\lvert #1 \Biggr\rvert} % Bigg absolute value
+
+% ========== Vector stuff 
+\newcommand{\bvec}[1]{\boldsymbol{#1}} % boldface vector
+\newcommand{\linspan}{\operatorname{span}} % linear span
+\newcommand{\conv}{\operatorname{conv}} % convex hull
+\newcommand{\co}[1]{\operatorname{co}\{ #1\}} % convex hull - needed for old files
+
+% ========== quotient space
+%
+\newcommand*{\quotientspace}[2]% quotient space displayed
+{\ensuremath{\raisebox{.25ex}{\ensuremath{#1}} \hspace{-.35ex} \raisebox{-.25ex}{/} 
+\hspace{-.05ex} \raisebox{-.85ex}{\ensuremath{#2}}} \hspace{.2ex} }
+%
+\newcommand*{\textquotientspace}[2]% quotient space inside text
+{\ensuremath{\raisebox{.05ex}{\ensuremath{#1}} \hspace{-.30ex} \raisebox{-.15ex}{/} 
+\hspace{.10ex} \raisebox{-.55ex}{\ensuremath{#2}}}}
+
+% ========== Matrix stuff 
+\newcommand{\rank}{\operatorname{rank}} % rank
+\newcommand{\tr}{\operatorname{tr}} % trace
+
+% ========== Inner Product 
+\newcommand{\ip}[2]{\langle {#1},{#2}\rangle} % inner product
+\newcommand{\bigip}[2]{\bigl\langle {#1},{#2} \bigr\rangle} % big inner product
+\newcommand{\Bigip}[2]{\Bigl\langle {#1},{#2} \Bigr\rangle} % Big inner product
+\newcommand{\biggip}[2]{\biggl\langle {#1},{#2} \biggr\rangle} % bigg inner product
+\newcommand{\Biggip}[2]{\Biggl\langle {#1},{#2} \Biggr\rangle} % Bigg inner product
+
+% ========== angle brackets with one argument only
+\newcommand{\ab}[1]{\langle {#1}\rangle} % angle brackets
+\newcommand{\bigab}[1]{\bigl\langle {#1} \bigr\rangle} % big angle brackets
+\newcommand{\Bigab}[1]{\Bigl\langle {#1} \Bigr\rangle} % Big angle brackets
+\newcommand{\biggab}[1]{\biggl\langle {#1} \biggr\rangle} % bigg angle brackets
+\newcommand{\Biggab}[1]{\Biggl\langle {#1} \Biggr\rangle} % Bigg angle brackets
+
+% ========== Norms 
+\newcommand{\norm}[1]{\lVert #1 \rVert} % norm
+\newcommand{\bignorm}[1]{\bigl\lVert #1 \bigr\rVert} % big norm
+\newcommand{\Bignorm}[1]{\Bigl\lVert #1 \Bigr\rVert} % Big norm
+\newcommand{\biggnorm}[1]{\biggl\lVert #1 \biggr\rVert} % bigg norm
+\newcommand{\Biggnorm}[1]{\Biggl\lVert #1 \Biggr\rVert} % Bigg norm
+%
+\newcommand{\euclidnorm}[1]{\lvert #1 \rvert} % euclidean norm
+\newcommand{\bigeuclidnorm}[1]{\bigl\lvert #1 \bigr\rvert} % big euclidean norm
+\newcommand{\Bigeuclidnorm}[1]{\Bigl\lvert #1 \Bigr\rvert} % Big euclidean norm
+\newcommand{\biggeuclidnorm}[1]{\biggl\lvert #1 \biggr\rvert} % bigg euclidean norm
+\newcommand{\Biggeuclidnorm}[1]{\Biggl\lvert #1 \Biggr\rvert} % Bigg euclidean norm
+%
+\newcommand{\eunorm}[1]{\lvert #1 \rvert} % euclidean norm - old version, needed for old files
+\newcommand{\bigeunorm}[1]{\bigl\lvert #1 \bigr\rvert} % big euclidean norm - old version, ...
+\newcommand{\Bigeunorm}[1]{\Bigl\lvert #1 \Bigr\rvert} % Big euclidean norm - old version, ...
+\newcommand{\biggeunorm}[1]{\biggl\lvert #1 \biggr\rvert} % bigg euclidean norm - old version, ...
+\newcommand{\Biggeunorm}[1]{\Biggl\lvert #1 \Biggr\rvert} % Bigg euclidean norm - old version, ...
+%
+\newcommand{\trinorm}[1]{%
+\vert\hspace{-.25ex}\vert\hspace{-.25ex}\vert #1 %
+\vert\hspace{-.25ex}\vert\hspace{-.25ex}\vert} % triple norm
+%
+\newcommand{\bigtrinorm}[1]{%
+\bigl\vert\hspace{-.25ex}\bigl\vert\hspace{-.25ex}\bigl\vert #1 %
+\bigr\vert\hspace{-.25ex}\bigr\vert\hspace{-.25ex}\bigr\vert} % big triple norm
+%
+\newcommand{\Bigtrinorm}[1]{%
+\Bigl\vert\hspace{-.25ex}\Bigl\vert\hspace{-.25ex}\Bigl\vert #1 %
+\Bigr\vert\hspace{-.25ex}\Bigr\vert\hspace{-.25ex}\Bigr\vert} % Big triple norm
+%
+\newcommand{\biggtrinorm}[1]{%
+\biggl\vert\hspace{-.25ex}\biggl\vert\hspace{-.25ex}\biggl\vert #1 %
+\biggr\vert\hspace{-.25ex}\biggr\vert\hspace{-.25ex}\biggr\vert} % bigg triple norm
+%
+\newcommand{\Biggtrinorm}[1]{%
+\Biggl\vert\hspace{-.25ex}\Biggl\vert\hspace{-.25ex}\Biggl\vert #1 %
+\Biggr\vert\hspace{-.25ex}\Biggr\vert\hspace{-.25ex}\Biggr\vert} % Big triple norm
+
+
+% ========== Probability stuff 
+\newcommand{\PP}{\operatorname{\mathbb{P}}} % probability
+\newcommand{\EE}{\operatorname{\mathbb{E}}} % expectation
+\newcommand{\Law}{\operatorname{Law}} % law
+\newcommand{\conPP}[2]{\operatorname{\mathbb{P}}\left(#1\,\vert\,#2\right)} % conditional probability
+\newcommand{\conEE}[2]{\operatorname{\mathbb{E}}\left(#1\,\vert\,#2\right)} % conditional expectation
+\newcommand{\conLaw}[2]{\operatorname{Law}\left(#1\,\vert\,#2\right)} % conditional law
+%
+\newcommand{\indicator}[1]{\mathbf{1}_{#1}} % for indicator functions
+\newcommand{\ind}[1]{\mathbf{1}_{#1}} % for indicator functions - old version
+\newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\Cov}{\operatorname{Cov}} % covaiance
+%
+\newcommand{\Pro}{\operatorname{\mathbb{P}}} % probability - old version, may need it for old files
+\newcommand{\Ex}{\operatorname{\mathbb{E}}} % expectation - old version, may need it for old files
+\newcommand{\Condpro}[2]{\operatorname{\mathbb{P}}\left(#1\,\vert\,#2\right)} % conditional probability - old version, ...
+\newcommand{\Condex}[2]{\operatorname{\mathbb{E}}\left(#1\,\vert\,#2\right)} % conditional expectation - old version, ...
+%
+% ==========
+
+
+
+% ========== Greek alphabet 
+% shorthands for greek letters  
+% some old files may need them
+\newcommand{\alf}{\alpha}
+\newcommand{\bet}{\beta} 
+\newcommand{\gam}{\gamma}
+\newcommand{\Gam}{\Gamma}
+\newcommand{\del}{\delta}
+\newcommand{\Del}{\Delta}
+\newcommand{\eps}{\epsilon}
+\newcommand{\vareps}{\varepsilon}
+\newcommand{\zet}{\zeta}
+\newcommand{\tet}{\theta}
+\newcommand{\Tet}{\Theta}
+\newcommand{\lam}{\lambda}
+\newcommand{\Lam}{\Lambda}
+\newcommand{\sig}{\sigma}
+\newcommand{\Sig}{\Sigma}
+\newcommand{\varsig}{\varsigma}
+\newcommand{\ups}{\upsilon}
+\newcommand{\Ups}{\Upsilon}
+\newcommand{\ome}{\omega}
+\newcommand{\Ome}{\Omega}
+\newcommand{\Tau}{\mathcal{T}}
+% ==========
+
