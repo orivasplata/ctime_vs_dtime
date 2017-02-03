@@ -21,7 +21,7 @@
 \setlength{\textheight}{22cm}
 
 
-% ========== Theorem-like stuff 
+% ========== Theorem-like stuff
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
@@ -70,16 +70,17 @@ The setting and notations...
 \item $u$, $u_t$ (discrete time), $u(t)$ (continuous time) elements of the dual space.
 \end{itemize}
 The MD algorithm (discrete time) uses the initialization and updates
-\begin{align*}
-x_1 &= \arg\min R(x)\,, \\
-x_{t+1} &= \arg\min_{x \in \R^d} \Bigl\{ \ab{\nabla\ell_t(x_{t}), x} + \eta D_{R}(x, x_{t})\Bigr\}\,.
-\end{align*}
+\begin{align}
+x_1 &= \arg\min R(x)\,, \tag{1md} \\
+x_{t+1} &= \arg\min_{x \in \R^d} \Bigl\{ \eta \ab{\nabla\ell_t(x_{t}), x} + D_{R}(x, x_{t})\Bigr\}\,.
+\tag{2md}
+\end{align}
 Here $D_{R}(x,y)$ stands for the Bregman divergence, whose definition is recalled now:
-$$
+\[
 D_{R}(a_{1}, a_{2}) = R(a_{1}) - R(a_{2}) - \ab{\nabla R(a_2), a_{1} - a_{2}}\,.
-$$
+\]
 The order of the arguments matters.
-Let's say $D_{R}(a_{1},a_{2})$ is ``supported at $a_{2}$'' 
+Let's say $D_{R}(a_{1},a_{2})$ is ``supported at $a_{2}$''
 (its definition uses a tangent supported at $a_{2}$).
 To minimize clutter let's denote by $\partial_{i}$ the partial derivative (operator)
 with respect to the $i$-th argument. So for instance:
@@ -87,7 +88,7 @@ with respect to the $i$-th argument. So for instance:
 \partial_{1} D_{R}(a_{1}, a_{2}) &= \nabla R(a_{1}) - \nabla R(a_{2})\,, \\[1mm]
 \partial_{2} D_{R}(a_{1}, a_{2}) &= - \nabla^2 R(a_{2})(a_{1} - a_{2})\,.
 \end{align*}
-A couple of equations in discrete time:
+The equations \eqref{1md,2md} are equivalent to:
 \begin{align*}
 u_{t+1} &= u_{t} - \eta \nabla \ell_{t}(x_{t}) \label{eq.dtime.1} \tag{1dt} \\
 x_{t} &= \nabla R^{*}(u_{t})\,. \label{eq.dtime.2} \tag{2dt}
@@ -98,15 +99,15 @@ Analogous equations in continuous time:
 x(t) &= \nabla R^{*}(u(t))\,. \label{eq.ctime.2} \tag{2ct}
 \end{align*}
 For fixed $x^{*} \in \R^d$, $u^{*} = \nabla R(x^{*})$,
-\setcounter{equation}{2}
+\setcounter{equation}{3}
 \begin{equation}
 \ell_{t}(x^{*}) \geq \ell_{t}(x(t)) + \ab{\nabla\ell_t(x(t)), x^{*} - x(t)} \label{eq.loss}
 \end{equation}
-From \eqref{eq.ctime.1} we get $\nabla \ell_{t}(x(t)) = -\dot{u}(t)/\eta$, 
+From \eqref{eq.ctime.1} we get $\nabla \ell_{t}(x(t)) = -\dot{u}(t)/\eta$,
 and plugging this in \eqref{eq.loss} we get:
-$$
+\[
 \ell_{t}(x^{*}) \geq \ell_{t}(x(t)) - \frac{1}{\eta} \ab{\dot{u}(t), x^{*} - x(t)}\,.
-$$
+\]
 Rearranging:
 \begin{equation}
 \ell_{t}(x(t)) - \ell_{t}(x^{*}) \leq  \frac{1}{\eta} \ab{\dot{u}(t), x^{*} - x(t)}\,, \label{eq.loss.prep}
@@ -130,12 +131,12 @@ On the other hand,
 \end{align*}
 Combining the two:
 \begin{align*}
-\ab{ \dot{u}(t), x^{*} - x(t)} 
+\ab{ \dot{u}(t), x^{*} - x(t)}
 &= - \ab{ u^{*} -u(t), \dot{x}(t) } - \frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)} \\[1mm]
 %&= \frac{d}{dt} D_{R^{*}}(u^{*}, u(t)) - \frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)}\,.
 &= \frac{d}{dt} \Bigl( D_{R^{*}}(u^{*}, u(t)) - \ab{u^{*} - u(t), x^{*} - x(t)} \Bigr)\,.
 \end{align*}
-Note that the term 
+Note that the term
 $\ab{u^{*} - u(t), x^{*} - x(t)} = \ab{\nabla R(x^{*}) - \nabla R(x(t)), x^{*} - x(t)}$
 is the sum of $D_{R}(x^{*}, x(t))$ and $D_{R}(x(t), x^{*})$.
 This is a general property of Bregman divergences that can be obtained directly from the definition:
@@ -145,7 +146,7 @@ D_{R}(a_{1}, a_{2}) + D_{R}(a_{2}, a_{1})
 $$
 Then \eqref{eq.loss.prep} can be written as
 \begin{equation*}
-\ell_{t}(x(t)) - \ell_{t}(x^{*}) 
+\ell_{t}(x(t)) - \ell_{t}(x^{*})
 \leq  \frac{1}{\eta} \frac{d}{dt} \Bigl( D_{R^{*}}(u^{*}, u(t)) - D_{R}(x^{*}, x(t)) - D_{R}(x(t), x^{*})\Bigr)\,.
 \end{equation*}
 After integrating:
@@ -154,6 +155,12 @@ After integrating:
 &\leq \frac{1}{\eta} \bigl[ D_{R^{*}}(u^{*}, u(T)) - D_{R}(x^{*}, x(T)) - D_{R}(x(T), x^{*}) \\
 &\hspace{10mm}- D_{R^{*}}(u^{*}, u(0)) + D_{R}(x^{*}, x(0)) + D_{R}(x(0), x^{*}) \bigr]
 \end{align*}
+
+Note: Follow the regularized leader (FTRL) is equivalent to mirror descent when $R$ is a Legendre function
+(unconstrained ``optimization'').
+Hence, the above result is applicable to both MD and FTRL in this case.
+
+However, when $R$ is not Legendre (constrained case), they will generally be different.
 
 
 \end{document}  % ========== END DOCUMENT
