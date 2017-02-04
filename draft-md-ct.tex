@@ -71,8 +71,9 @@ The setting and notations...
 \end{itemize}
 The MD algorithm (discrete time) uses the initialization and updates
 \begin{align}
-x_1 &= \arg\min R(x)\,, \tag{1md} \\
+x_1 &= \arg\min R(x)\,, \label{eq.dtime.md1} \tag{1md} \\
 x_{t+1} &= \arg\min_{x \in \R^d} \Bigl\{ \eta \ab{\nabla\ell_t(x_{t}), x} + D_{R}(x, x_{t})\Bigr\}\,.
+ \label{eq.dtime.md2} 
 \tag{2md}
 \end{align}
 Here $D_{R}(x,y)$ stands for the Bregman divergence, whose definition is recalled now:
@@ -88,7 +89,7 @@ with respect to the $i$-th argument. So for instance:
 \partial_{1} D_{R}(a_{1}, a_{2}) &= \nabla R(a_{1}) - \nabla R(a_{2})\,, \\[1mm]
 \partial_{2} D_{R}(a_{1}, a_{2}) &= - \nabla^2 R(a_{2})(a_{1} - a_{2})\,.
 \end{align*}
-The equations \eqref{1md,2md} are equivalent to:
+The equations \eqref{eq.dtime.md1}--\eqref{eq.dtime.md2} are equivalent to:
 \begin{align*}
 u_{t+1} &= u_{t} - \eta \nabla \ell_{t}(x_{t}) \label{eq.dtime.1} \tag{1dt} \\
 x_{t} &= \nabla R^{*}(u_{t})\,. \label{eq.dtime.2} \tag{2dt}
