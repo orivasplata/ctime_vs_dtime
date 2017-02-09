@@ -4,7 +4,7 @@
 % Last modified: 2017 February 01
 
 
-\documentclass[12pt]{report}
+\documentclass[12pt]{article}
 \usepackage{amsmath,amssymb,amscd,amsthm}
 \usepackage{mathdef-omar}
 \usepackage{enumitem}
@@ -102,10 +102,10 @@ x(t) &= \nabla R^{*}(u(t))\,. \label{eq.ctime.2} \tag{2ct}
 For fixed $x^{*} \in \R^d$, $u^{*} = \nabla R(x^{*})$,
 \setcounter{equation}{3}
 \begin{equation}
-\ell_{t}(x^{*}) \geq \ell_{t}(x(t)) + \ab{\nabla\ell_t(x(t)), x^{*} - x(t)} \label{eq.loss}
+\ell_{t}(x^{*}) \geq \ell_{t}(x(t)) + \ab{\nabla\ell_t(x(t)), x^{*} - x(t)} \label{eq.linearizing.loss}
 \end{equation}
 From \eqref{eq.ctime.1} we get $\nabla \ell_{t}(x(t)) = -\dot{u}(t)/\eta$,
-and plugging this in \eqref{eq.loss} we get:
+and plugging this in \eqref{eq.linearizing.loss} we get:
 \[
 \ell_{t}(x^{*}) \geq \ell_{t}(x(t)) - \frac{1}{\eta} \ab{\dot{u}(t), x^{*} - x(t)}\,.
 \]
@@ -163,5 +163,80 @@ Hence, the above result is applicable to both MD and FTRL in this case.
 
 However, when $R$ is not Legendre (constrained case), they will generally be different.
 
+
+
+\newpage
+
+Some more calculations, based on the approach of \cite{Kwon-M}.
+
+\bigskip
+
+\noindent
+Let's put 
+$\displaystyle y(t) = \int_{0}^{t} \dot{u}(s) ds = -\eta \int_{0}^{t} \nabla\ell_{s}(x(s)) ds$.
+Then for a fixed $x$,
+\begin{equation}
+\int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x}
+= \frac{\ab{y(t), x}}{\eta}
+\leq \frac{R^{*}(y(t)) + R(x)}{\eta}\,.
+\label{eq.using.fenchel.ineq}
+\end{equation}
+But noting that $x(t) = \nabla R^{*}(y(t))$, 
+which means that $x(t)$ is the optimizer in the definition of $R^{*}$, then
+\begin{align}
+\frac{R^{*}(y(t))}{\eta}
+&= \frac{\ab{y(t), x(t)} - R(x(t))}{\eta} \notag \\[1mm]
+&= \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(t)} ds - \frac{R(x(t))}{\eta}\,.
+\label{eq.something}
+\end{align}
+Consider the function $\varphi(t,x) = \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x} ds$.
+The time derivative is
+$\dot{\varphi}(t,x) = \ab{-\nabla\ell_{t}(x(t)), x}$.
+In particular, $\dot{\varphi}(t,x(t)) = \ab{-\nabla\ell_{t}(x(t)), x(t)}$,
+and integrating (note that $\varphi(0,x(0)) = 0$) we get
+$$
+\int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(t)} ds 
+= \varphi(t,x(t)) = \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(s)} ds\,.
+$$
+% omar's note: this last thing looked like magic to me!
+Therefore continuing from \eqref{eq.using.fenchel.ineq} and \eqref{eq.something} above,
+and rearranging,
+$$
+\int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x(s)} ds - \int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x} ds
+\leq \frac{R(x) - R(x(t))}{\eta}\,.
+$$
+So using the linearization trick (see \eqref{eq.linearizing.loss} above) we get
+$$
+\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x^{*})] dt
+\leq \int_{0}^{T} \ab{\nabla\ell_{t}(x(t)), x(t) - x} dt
+\leq \frac{R(x) - R(x(T))}{\eta}\,.
+$$
+
+
+\medskip
+
+\begin{thebibliography}{biblio}
+
+\bibitem{Kwon-M}
+  J.~Kwon and P.~Mertikopoulos,
+  A continuous-time approach to online optimization.
+  Preprint. arXiv:1401.6956.
+
+\bibitem{Warmuth-Jagota}
+  M.K.~Warmuth and A.K.~Jagota,
+  Continuous and discrete-time nonlinear gradient descent: relative loss bounds and convergence.
+  In: 
+  \textit{Proc. Fifth International Symposium on Artificial Intelligence and Mathematics}, 1998.
+
+
+\end{thebibliography}
+
+
+\vspace{.5cm}
+
+
+% -------------------------------------------------------
+\noindent
+Last updated: \today
 
 \end{document}  % ========== END DOCUMENT
