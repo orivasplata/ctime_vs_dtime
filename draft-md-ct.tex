@@ -11,7 +11,7 @@
 
 
 % ========== Pstricks
-%\usepackage{pst-all}
+\usepackage{pst-all}
 
 
 % ========== Page formats
@@ -198,20 +198,73 @@ $$
 \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(t)} ds 
 = \varphi(t,x(t)) = \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(s)} ds\,.
 $$
-% omar's note: this last thing looked like magic to me!
-Therefore continuing from \eqref{eq.using.fenchel.ineq} and \eqref{eq.something} above,
-and rearranging,
-$$
-\int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x(s)} ds - \int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x} ds
-\leq \frac{R(x) - R(x(t))}{\eta}\,.
-$$
-So using the linearization trick (see \eqref{eq.linearizing.loss} above) we get
-$$
-\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x^{*})] dt
-\leq \int_{0}^{T} \ab{\nabla\ell_{t}(x(t)), x(t) - x} dt
-\leq \frac{R(x) - R(x(T))}{\eta}\,.
-$$
+% omar's note: this last thing needs to be fixed!
 
+% Picture 
+\psset{unit=1.4pt} \vspace{3mm} \hspace{8cm}
+\pspicture(0,0)(0,0)
+\pspolygon[fillcolor=gray,fillstyle=crosshatch*](0,0)(70,0) (70,50)(0,50)
+\rput(35,25){\psframebox*[framearc=.3]{\parbox[c]{2.5cm}{\footnotesize\centering STEEL PLATE ON ROAD}}}
+\endpspicture
+
+% omar's note: the following to be added back when the above is fixed!
+%\noindent
+%Therefore continuing from \eqref{eq.using.fenchel.ineq} and \eqref{eq.something} above,
+%and rearranging,
+%$$
+%\int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x(s)} ds - \int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x} ds
+%\leq \frac{R(x) - R(x(t))}{\eta}\,.
+%$$
+%So using the linearization trick (see \eqref{eq.linearizing.loss} above) we get
+%$$
+%\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x^{*})] dt
+%\leq \int_{0}^{T} \ab{\nabla\ell_{t}(x(t)), x(t) - x} dt
+%\leq \frac{R(x) - R(x(T))}{\eta}\,.
+%$$
+
+\newpage
+
+\section*{Equivalence between FTRL and MD}
+
+Some notes to clarify the equivalence between 
+Follow the Regularized Leader (FTRL) and Mirror Descent (MD) algorithms.
+
+\medskip
+
+The FTRL algorithm (discrete time) uses the initialization and updates
+\begin{align}
+x_1 &= ??? \label{eq.ftrl1} \tag{1ftrl} \\
+x_{t+1} &= \arg\min_{x \in \R^d} \Bigl\{ \eta \Bigab{ \sum_{s=1}^{t} \nabla\ell_s(x_{s}), x} + R(x)\Bigr\}\,.
+ \label{eq.ftrl2} 
+\tag{2ftrl}
+\end{align}
+Here $R(x)$ is the regularizer used by FTRL.
+To find an explicit form for the optimizer, let
+$$
+G(x) = \eta \sum_{s=1}^{t} \ab{ \nabla\ell_s(x_{s}), x} + R(x)\,.
+$$
+Then $\nabla G(x) = \eta \sum_{s=1}^{t} \nabla\ell_s(x_{s}) + \nabla R(x)$
+and it is clear that $\nabla G(x) = 0$ 
+when $x = \nabla R^{*} \bigl( -\eta \sum_{s=1}^{t} \nabla\ell_s(x_{s}) \bigr)$.
+The second derivative $\nabla^2 G(x) = \nabla^2 R(x)$ is positive,
+so this point $x$ gives the minimum.
+So the update rule \eqref{eq.ftrl2} becomes
+$$
+x_{t+1} = \nabla R^{*} \bigl( -\eta \sum_{s=1}^{t} \nabla\ell_s(x_{s}) \bigr)\,.
+$$
+Defining $u_{t+1} = -\eta \sum_{s=1}^{t} \nabla\ell_s(x_{s})$ with $u_{0} = 0$,
+we get $u_{t+1} = u_{t} - \eta \nabla\ell_t(x_{t})$,
+and the update can be rewritten as the following:
+\begin{align*}
+u_{t+1} &= u_{t} - \eta \nabla \ell_{t}(x_{t})\,, \\
+x_{t+1} &= \nabla R^{*}(u_{t+1})\,. 
+\end{align*}
+These are clearly the equations \eqref{eq.dtime.1}--\eqref{eq.dtime.2} of MD.
+
+\medskip
+
+Conversely, starting from the equations \eqref{eq.dtime.1}--\eqref{eq.dtime.2} of MD,
+we can revert the process and obtain the equations \eqref{eq.ftrl1}--\eqref{eq.ftrl2} of FTRL.
 
 \medskip
 
