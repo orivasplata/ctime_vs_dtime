@@ -11,7 +11,7 @@
 
 
 % ========== Pstricks
-\usepackage{pst-all}
+%\usepackage{pst-all}
 
 
 % ========== Page formats
@@ -190,37 +190,43 @@ which means that $x(t)$ is the optimizer in the definition of $R^{*}$, then
 \label{eq.something}
 \end{align}
 Consider the function $\varphi(t,x) = \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x} ds$.
+In particular, with $x$ replaced with $x(t)$ we have
+$\varphi(t,x(t)) = \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(t)} ds$.
 The time derivative is
-$\dot{\varphi}(t,x) = \ab{-\nabla\ell_{t}(x(t)), x}$.
-In particular, $\dot{\varphi}(t,x(t)) = \ab{-\nabla\ell_{t}(x(t)), x(t)}$,
-and integrating (note that $\varphi(0,x(0)) = 0$) we get
-$$
+\begin{align*}
+\frac{d}{dt}\varphi(t,x(t))
+&= \dot{\varphi}(t,x(t)) + \frac{\partial}{\partial x} \varphi(t,x(t)) \cdot \dot{x}(t) \\
+&= \ab{-\nabla\ell_{t}(x(t)), x(t)} + \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), \dot{x}(t)} ds \\
+&= \ab{-\nabla\ell_{t}(x(t)), x(t)} + \frac{\ab{y(t), \dot{x}(t)}}{\eta}\,.
+\end{align*}
+Then with integration (note that $\varphi(0,x(0)) = 0$) we get
+\begin{align*}
 \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(t)} ds 
-= \varphi(t,x(t)) = \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(s)} ds\,.
-$$
+&= \varphi(t,x(t)) \\
+&= \int_{0}^{t} \frac{d}{ds} \varphi(s,x(s)) ds \\
+&= \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(s)} ds 
+     + \frac{1}{\eta} \int_{0}^{t} \ab{y(s), \dot{x}(s)} ds\,.
+\end{align*}
 % omar's note: this last thing needs to be fixed!
 
-% Picture 
-\psset{unit=1.4pt} \vspace{3mm} \hspace{8cm}
-\pspicture(0,0)(0,0)
-\pspolygon[fillcolor=gray,fillstyle=crosshatch*](0,0)(70,0) (70,50)(0,50)
-\rput(35,25){\psframebox*[framearc=.3]{\parbox[c]{2.5cm}{\footnotesize\centering STEEL PLATE ON ROAD}}}
-\endpspicture
+%% Picture 
+%\psset{unit=1.4pt} \vspace{3mm} \hspace{8cm}
+%\pspicture(0,0)(0,0)
+%\pspolygon[fillcolor=gray,fillstyle=crosshatch*](0,0)(70,0) (70,50)(0,50)
+%\rput(35,25){\psframebox*[framearc=.3]{\parbox[c]{2.5cm}{\footnotesize\centering STEEL PLATE ON ROAD}}}
+%\endpspicture
+
 
 % omar's note: the following to be added back when the above is fixed!
-%\noindent
-%Therefore continuing from \eqref{eq.using.fenchel.ineq} and \eqref{eq.something} above,
-%and rearranging,
-%$$
-%\int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x(s)} ds - \int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x} ds
-%\leq \frac{R(x) - R(x(t))}{\eta}\,.
-%$$
-%So using the linearization trick (see \eqref{eq.linearizing.loss} above) we get
-%$$
-%\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x^{*})] dt
-%\leq \int_{0}^{T} \ab{\nabla\ell_{t}(x(t)), x(t) - x} dt
-%\leq \frac{R(x) - R(x(T))}{\eta}\,.
-%$$
+\noindent
+So using the linearization trick (see \eqref{eq.linearizing.loss} above),
+continuing from \eqref{eq.using.fenchel.ineq} and \eqref{eq.something},
+and rearranging we get
+\begin{align*}
+\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x^{*})] dt
+&\leq \int_{0}^{T} \ab{\nabla\ell_{t}(x(t)), x(t) - x} dt \\
+&\leq \frac{R(x) - R(x(T))}{\eta} + \frac{1}{\eta} \int_{0}^{t} \ab{y(s), \dot{x}(s)} ds\,.
+\end{align*}
 
 \newpage
 
