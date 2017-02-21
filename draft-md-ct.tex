@@ -54,9 +54,7 @@
 
 \begin{document}  % ========== BEGIN DOCUMENT
 
-Some calculations about the mirror descent (MD) algorithm.
-
-\bigskip
+\section*{Some calculations about the MD algorithm}
 
 \noindent
 The setting and notations...
@@ -124,6 +122,8 @@ On one hand, by the chain rule and the symmetry of the Hessian:
 &= - \ab{ \nabla^2 R^{*}(u(t))(u^{*} -u(t)), \dot{u}(t) } \\[1mm]
 &= - \ab{ u^{*} -u(t), \nabla^2 R^{*}(u(t)) \dot{u}(t) } \\[1mm]
 &= - \ab{u^{*} - u(t), \dot{x}(t)}\,.
+\addtocounter{equation}{1}
+\label{eq.deriv.diver.dual}  \tag{\theequation}
 \end{align*}
 On the other hand,
 \begin{align*}
@@ -152,9 +152,13 @@ Then \eqref{eq.loss.prep} can be written as
 \end{equation*}
 After integrating:
 \begin{align*}
-\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x^{*})] dt
-&\leq \frac{1}{\eta} \bigl[ D_{R^{*}}(u^{*}, u(T)) - D_{R}(x^{*}, x(T)) - D_{R}(x(T), x^{*}) \\
-&\hspace{10mm}- D_{R^{*}}(u^{*}, u(0)) + D_{R}(x^{*}, x(0)) + D_{R}(x(0), x^{*}) \bigr]
+&\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x^{*})] dt \\
+&\hspace{1.5cm}
+\leq \frac{1}{\eta} \bigl[ D_{R^{*}}(u^{*}, u(T)) - D_{R}(x^{*}, x(T)) - D_{R}(x(T), x^{*}) \\
+&\hspace{3.0cm} 
+- D_{R^{*}}(u^{*}, u(0)) + D_{R}(x^{*}, x(0)) + D_{R}(x(0), x^{*}) \bigr]\,.
+\addtocounter{equation}{1}
+\label{eq.bound.first}  \tag{\theequation}
 \end{align*}
 
 Note: Follow the regularized leader (FTRL) is equivalent to mirror descent when $R$ is a Legendre function
@@ -165,68 +169,99 @@ However, when $R$ is not Legendre (constrained case), they will generally be dif
 
 
 
-\newpage
 
-Some more calculations, based on the approach of \cite{Kwon-M}.
+\section*{Some more calculations...}
+
+Based on the approach of \cite{Kwon-M}.
 
 \bigskip
 
 \noindent
-Let's put 
-$\displaystyle y(t) = \int_{0}^{t} \dot{u}(s) ds = -\eta \int_{0}^{t} \nabla\ell_{s}(x(s)) ds$.
+From \eqref{eq.ctime.1} we have
+$$
+u(t) - u(0) = \int_{0}^{t} \dot{u}(s) ds = -\eta \int_{0}^{t} \nabla\ell_{s}(x(s)) ds.
+$$
 Then for a fixed $x$,
 \begin{equation}
 \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x}
-= \frac{\ab{y(t), x}}{\eta}
-\leq \frac{R^{*}(y(t)) + R(x)}{\eta}\,.
+= \frac{\ab{u(t) - u(0), x}}{\eta}
+\leq \frac{R^{*}(u(t)) + R(x) - \ab{u(0),x}}{\eta}\,.
 \label{eq.using.fenchel.ineq}
 \end{equation}
-But noting that $x(t) = \nabla R^{*}(y(t))$, 
-which means that $x(t)$ is the optimizer in the definition of $R^{*}$, then
+But noting from \eqref{eq.ctime.2} that $x(t) = \nabla R^{*}(u(t))$, 
+which means that $x(t)$ is the optimizer in the definition of $R^{*}$, 
+then
 \begin{align}
-\frac{R^{*}(y(t))}{\eta}
-&= \frac{\ab{y(t), x(t)} - R(x(t))}{\eta} \notag \\[1mm]
-&= \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(t)} ds - \frac{R(x(t))}{\eta}\,.
+\frac{R^{*}(u(t))}{\eta}
+&= \frac{\ab{u(t), x(t)} - R(x(t))}{\eta} \notag \\[1mm]
+&= \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(t)} ds + \frac{\ab{u(0),x(t)}-R(x(t))}{\eta}\,.
 \label{eq.something}
 \end{align}
 Consider the function $\varphi(t,x) = \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x} ds$.
-In particular, with $x$ replaced with $x(t)$ we have
-$\varphi(t,x(t)) = \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(t)} ds$.
+In particular, replacing $x$ with $x(t)$ we have
+$$
+\varphi(t,x(t)) = \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(t)} ds.
+$$
 The time derivative is
 \begin{align*}
 \frac{d}{dt}\varphi(t,x(t))
-&= \dot{\varphi}(t,x(t)) + \frac{\partial}{\partial x} \varphi(t,x(t)) \cdot \dot{x}(t) \\
+%&= \dot{\varphi}(t,x(t)) + \frac{\partial}{\partial x} \varphi(t,x(t)) \cdot \dot{x}(t) \\
 &= \ab{-\nabla\ell_{t}(x(t)), x(t)} + \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), \dot{x}(t)} ds \\
-&= \ab{-\nabla\ell_{t}(x(t)), x(t)} + \frac{\ab{y(t), \dot{x}(t)}}{\eta}\,.
+&= \ab{-\nabla\ell_{t}(x(t)), x(t)} + \frac{1}{\eta} \ab{u(t) - u(0), \dot{x}(t)} \\
+&= \ab{-\nabla\ell_{t}(x(t)), x(t)} + \frac{1}{\eta} \frac{d}{dt} D_{R^{*}}(u(0), u(t)) \,,
 \end{align*}
-Then with integration (note that $\varphi(0,x(0)) = 0$) we get
+where in the last step we used \eqref{eq.deriv.diver.dual} with $u(0)$ instead of $u^{*}$.
+Then integrating
+(note that $\varphi(0,x) = 0$ for any $x$, and $D_{R^{*}}(u(0), u(0)) = 0$) 
+we get
 \begin{align*}
-\int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(t)} ds 
-&= \varphi(t,x(t)) \\
+\varphi(t,x(t)) 
 &= \int_{0}^{t} \frac{d}{ds} \varphi(s,x(s)) ds \\
 &= \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(s)} ds 
-     + \frac{1}{\eta} \int_{0}^{t} \ab{y(s), \dot{x}(s)} ds\,.
+     + \frac{1}{\eta} D_{R^{*}}(u(0), u(t)) \,.
 \end{align*}
-% omar's note: this last thing needs to be fixed!
-
-%% Picture 
-%\psset{unit=1.4pt} \vspace{3mm} \hspace{8cm}
-%\pspicture(0,0)(0,0)
-%\pspolygon[fillcolor=gray,fillstyle=crosshatch*](0,0)(70,0) (70,50)(0,50)
-%\rput(35,25){\psframebox*[framearc=.3]{\parbox[c]{2.5cm}{\footnotesize\centering STEEL PLATE ON ROAD}}}
-%\endpspicture
-
-
-% omar's note: the following to be added back when the above is fixed!
-\noindent
-So using the linearization trick (see \eqref{eq.linearizing.loss} above),
-continuing from \eqref{eq.using.fenchel.ineq} and \eqref{eq.something},
-and rearranging we get
+Then, continuing from \eqref{eq.using.fenchel.ineq} and \eqref{eq.something},
+and rearranging, we get
 \begin{align*}
-\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x^{*})] dt
-&\leq \int_{0}^{T} \ab{\nabla\ell_{t}(x(t)), x(t) - x} dt \\
-&\leq \frac{R(x) - R(x(T))}{\eta} + \frac{1}{\eta} \int_{0}^{t} \ab{y(s), \dot{x}(s)} ds\,.
+&\int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x(s)} ds - \int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x} ds \\
+&\hspace{1.5cm}
+\leq \frac{1}{\eta} \Bigl[ R(x) - R(x(t)) - \ab{u(0), x - x(t)} + D_{R^{*}}(u(0), u(t)) \Bigr]\,.
+\addtocounter{equation}{1}
+\label{eq.bound.shaping}  \tag{\theequation}
 \end{align*}
+Note that $u(0) = \nabla R(x(0))$. We have
+\begin{align*}
+&R(x) - R(x(t)) - \ab{u(0), x - x(t)} \\[1mm]
+&\hspace{1.5cm}
+= R(x) - R(x(t)) - \ab{\nabla R(x(0)), x - x(t)} \\[1mm]
+&\hspace{1.5cm}
+= R(x) - R(x(0)) - \ab{\nabla R(x(0)), x - x(0)} \\
+&\hspace{2.5cm}
+   + R(x(0)) - R(x(t)) - \ab{\nabla R(x(0)), x(0) - x(t)} \\[1mm]
+&\hspace{1.5cm}
+= D_{R}(x,x(0)) + D_{R}(x(0),x(t))\,.
+\end{align*}
+Using this in \eqref{eq.bound.shaping} we get
+\begin{align*}
+&\int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x(s)} ds - \int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x} ds \\
+&\hspace{1.5cm}
+\leq \frac{1}{\eta} \Bigl[ D_{R}(x,x(0)) + D_{R}(x(0),x(t)) + D_{R^{*}}(u(0), u(t)) \Bigr]\,.
+\end{align*}
+Finally, using the linearization trick (see \eqref{eq.linearizing.loss} above),
+\begin{align*}
+&\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x^{*})] dt
+\leq \int_{0}^{T} \ab{\nabla\ell_{t}(x(t)), x(t) - x} dt \\
+&\hspace{2.0cm}
+\leq \frac{1}{\eta} \Bigl[ D_{R}(x,x(0)) + D_{R}(x(0),x(T)) + D_{R^{*}}(u(0), u(T)) \Bigr]\,.
+\addtocounter{equation}{1}
+\label{eq.bound.new}  \tag{\theequation}
+\end{align*}
+
+\medskip
+
+Note: compare \eqref{eq.bound.new} with the first bound \eqref{eq.bound.first}.
+
+
 
 \newpage
 
@@ -239,7 +274,7 @@ Follow the Regularized Leader (FTRL) and Mirror Descent (MD) algorithms.
 
 The FTRL algorithm (discrete time) uses the initialization and updates
 \begin{align}
-x_1 &= ??? \label{eq.ftrl1} \tag{1ftrl} \\
+x_1 &= \arg\min R(x) \label{eq.ftrl1} \tag{1ftrl} \\
 x_{t+1} &= \arg\min_{x \in \R^d} \Bigl\{ \eta \Bigab{ \sum_{s=1}^{t} \nabla\ell_s(x_{s}), x} + R(x)\Bigr\}\,.
  \label{eq.ftrl2} 
 \tag{2ftrl}
@@ -299,3 +334,13 @@ we can revert the process and obtain the equations \eqref{eq.ftrl1}--\eqref{eq.f
 Last updated: \today
 
 \end{document}  % ========== END DOCUMENT
+
+
+
+
+%% Picture 
+%\psset{unit=1.4pt} \vspace{3mm} \hspace{8cm}
+%\pspicture(0,0)(0,0)
+%\pspolygon[fillcolor=gray,fillstyle=crosshatch*](0,0)(70,0) (70,50)(0,50)
+%\rput(35,25){\psframebox*[framearc=.3]{\parbox[c]{2.5cm}{\footnotesize\centering STEEL PLATE ON ROAD}}}
+%\endpspicture
