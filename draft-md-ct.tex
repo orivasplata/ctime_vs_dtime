@@ -97,66 +97,101 @@ Analogous equations in continuous time:
 \dot{u}(t) &= - \eta \nabla \ell_{t}(x(t)) \label{eq.ctime.1} \tag{1ct} \\
 x(t) &= \nabla R^{*}(u(t))\,. \label{eq.ctime.2} \tag{2ct}
 \end{align*}
-For fixed $x^{*} \in \R^d$, $u^{*} = \nabla R(x^{*})$,
+%For a fixed $x^{*} \in \R^d$, $u^{*} = \nabla R(x^{*})$,
+For a fixed $x' \in \R^d$, writing $u' = \nabla R(x')$ for its image in the dual space,
 \setcounter{equation}{3}
 \begin{equation}
-\ell_{t}(x^{*}) \geq \ell_{t}(x(t)) + \ab{\nabla\ell_t(x(t)), x^{*} - x(t)} \label{eq.linearizing.loss}
+%\ell_{t}(x^{*}) \geq \ell_{t}(x(t)) + \ab{\nabla\ell_t(x(t)), x^{*} - x(t)} \label{eq.linearizing.loss}
+\ell_{t}(x') \geq \ell_{t}(x(t)) + \ab{\nabla\ell_t(x(t)), x' - x(t)}\,. \label{eq.linearizing.loss}
 \end{equation}
 From \eqref{eq.ctime.1} we get $\nabla \ell_{t}(x(t)) = -\dot{u}(t)/\eta$,
 and plugging this in \eqref{eq.linearizing.loss} we get:
 \[
-\ell_{t}(x^{*}) \geq \ell_{t}(x(t)) - \frac{1}{\eta} \ab{\dot{u}(t), x^{*} - x(t)}\,.
+%\ell_{t}(x^{*}) \geq \ell_{t}(x(t)) - \frac{1}{\eta} \ab{\dot{u}(t), x^{*} - x(t)}\,.
+\ell_{t}(x') \geq \ell_{t}(x(t)) - \frac{1}{\eta} \ab{\dot{u}(t), x' - x(t)}\,.
 \]
 Rearranging:
 \begin{equation}
-\ell_{t}(x(t)) - \ell_{t}(x^{*}) \leq  \frac{1}{\eta} \ab{\dot{u}(t), x^{*} - x(t)}\,, \label{eq.loss.prep}
+%\ell_{t}(x(t)) - \ell_{t}(x^{*}) \leq  \frac{1}{\eta} \ab{\dot{u}(t), x^{*} - x(t)}\,, \label{eq.loss.prep}
+\ell_{t}(x(t)) - \ell_{t}(x') \leq  \frac{1}{\eta} \ab{\dot{u}(t), x' - x(t)}\,, \label{eq.loss.prep}
 \end{equation}
 and the claim is that the RHS is the derivative of a Bregman divergence.
 
 \bigskip
 
+Recall the identity $D_{R^{*}}(u', u) = D_{R}(x,x')$, which holds for any `dual pairs'
+$u = \nabla R (x)$, $u' = \nabla R (x')$.
+
+\bigskip
+
 On one hand, by the chain rule and the symmetry of the Hessian:
 \begin{align*}
-\frac{d}{dt} D_{R^{*}}(u^{*}, u(t))
-&= \ab{ \partial_{2} D_{R^{*}}(u^{*}, u(t)), \dot{u}(t)} \\[1mm]
-&= - \ab{ \nabla^2 R^{*}(u(t))(u^{*} -u(t)), \dot{u}(t) } \\[1mm]
-&= - \ab{ u^{*} -u(t), \nabla^2 R^{*}(u(t)) \dot{u}(t) } \\[1mm]
-&= - \ab{u^{*} - u(t), \dot{x}(t)}\,.
+%\frac{d}{dt} D_{R}(x(t), x^{*})
+%\frac{d}{dt} D_{R^{*}}(u^{*}, u(t))
+%&= \ab{ \partial_{2} D_{R^{*}}(u^{*}, u(t)), \dot{u}(t)} \\[1mm]
+%&= - \ab{ \nabla^2 R^{*}(u(t))(u^{*} -u(t)), \dot{u}(t) } \\[1mm]
+%&= - \ab{ u^{*} -u(t), \nabla^2 R^{*}(u(t)) \dot{u}(t) } \\[1mm]
+%&= - \ab{u^{*} - u(t), \dot{x}(t)}\,.
+%
+\frac{d}{dt} D_{R}(x(t), x')
+=\frac{d}{dt} D_{R^{*}}(u', u(t))
+&= \ab{ \partial_{2} D_{R^{*}}(u', u(t)), \dot{u}(t)} \\[1mm]
+&= - \ab{ \nabla^2 R^{*}(u(t))(u' -u(t)), \dot{u}(t) } \\[1mm]
+&= - \ab{ u' -u(t), \nabla^2 R^{*}(u(t)) \dot{u}(t) } \\[1mm]
+&= - \ab{u' - u(t), \dot{x}(t)}\,.
 \addtocounter{equation}{1}
 \label{eq.deriv.diver.dual}  \tag{\theequation}
 \end{align*}
 On the other hand,
 \begin{align*}
-\frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)}
-&= - \ab{ \dot{u}(t), x^{*} - x(t)} - \ab{ u^{*} -u(t), \dot{x}(t) }\,.
+%\frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)}
+%&= - \ab{ \dot{u}(t), x^{*} - x(t)} - \ab{ u^{*} -u(t), \dot{x}(t) }\,.
+\frac{d}{dt} \ab{u' - u(t), x' - x(t)}
+&= - \ab{ \dot{u}(t), x' - x(t)} - \ab{ u' -u(t), \dot{x}(t) }\,.
 \end{align*}
 Combining the two:
 \begin{align*}
-\ab{ \dot{u}(t), x^{*} - x(t)}
-&= - \ab{ u^{*} -u(t), \dot{x}(t) } - \frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)} \\[1mm]
-%&= \frac{d}{dt} D_{R^{*}}(u^{*}, u(t)) - \frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)}\,.
-&= \frac{d}{dt} \Bigl( D_{R^{*}}(u^{*}, u(t)) - \ab{u^{*} - u(t), x^{*} - x(t)} \Bigr)\,.
+%\ab{ \dot{u}(t), x^{*} - x(t)}
+%&= - \ab{ u^{*} -u(t), \dot{x}(t) } - \frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)} \\[1mm]
+%%&= \frac{d}{dt} D_{R}(x(t), x^{*}) - \frac{d}{dt} \ab{u^{*} - u(t), x^{*} - x(t)}\,.
+%&= \frac{d}{dt} \Bigl( D_{R^{*}}(u^{*}, u(t)) - \ab{u^{*} - u(t), x^{*} - x(t)} \Bigr)\,.
+%
+\ab{ \dot{u}(t), x' - x(t)}
+&= - \ab{ u' -u(t), \dot{x}(t) } - \frac{d}{dt} \ab{u' - u(t), x' - x(t)} \\[1mm]
+%&= \frac{d}{dt} D_{R}(x(t), x') - \frac{d}{dt} \ab{u' - u(t), x' - x(t)}\,.
+&= \frac{d}{dt} \Bigl( D_{R}(x(t), x') - \ab{u' - u(t), x' - x(t)} \Bigr)\,.
 \end{align*}
 Note that the term
-$\ab{u^{*} - u(t), x^{*} - x(t)} = \ab{\nabla R(x^{*}) - \nabla R(x(t)), x^{*} - x(t)}$
-is the sum of $D_{R}(x^{*}, x(t))$ and $D_{R}(x(t), x^{*})$.
+%$\ab{u^{*} - u(t), x^{*} - x(t)} = \ab{\nabla R(x^{*}) - \nabla R(x(t)), x^{*} - x(t)}$
+%is the sum of $D_{R}(x^{*}, x(t))$ and $D_{R}(x(t), x^{*})$.
+$\ab{u' - u(t), x' - x(t)} = \ab{\nabla R(x') - \nabla R(x(t)), x' - x(t)}$
+is the sum of $D_{R}(x', x(t))$ and $D_{R}(x(t), x')$.
 This is a general property of Bregman divergences that can be obtained directly from the definition:
 $$
 D_{R}(a_{1}, a_{2}) + D_{R}(a_{2}, a_{1})
 = \ab{\nabla R(a_{1}) - \nabla R(a_{2}), a_{1} - a_{2}}\,.
 $$
 Then \eqref{eq.loss.prep} can be written as
-\begin{equation*}
-\ell_{t}(x(t)) - \ell_{t}(x^{*})
-\leq  \frac{1}{\eta} \frac{d}{dt} \Bigl( D_{R^{*}}(u^{*}, u(t)) - D_{R}(x^{*}, x(t)) - D_{R}(x(t), x^{*})\Bigr)\,.
-\end{equation*}
+\begin{align*}
+%\ell_{t}(x(t)) - \ell_{t}(x^{*})
+%\leq  \frac{1}{\eta} 
+%   \frac{d}{dt} \Bigl( D_{R}(x(t), x^{*}) - D_{R}(x^{*}, x(t)) - D_{R}(x(t), x^{*})\Bigr)\,.
+%= -\frac{1}{\eta} \frac{d}{dt} D_{R}(x^{*}, x(t))\,.
+%
+\ell_{t}(x(t)) - \ell_{t}(x')
+&\leq  \frac{1}{\eta} \frac{d}{dt} \Bigl( D_{R}(x(t), x') - D_{R}(x', x(t)) - D_{R}(x(t), x')\Bigr) \\[1mm]
+&= -\frac{1}{\eta} \frac{d}{dt} D_{R}(x', x(t))\,.
+\end{align*}
 After integrating:
 \begin{align*}
-&\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x^{*})] dt \\
-&\hspace{1.5cm}
-\leq \frac{1}{\eta} \bigl[ D_{R^{*}}(u^{*}, u(T)) - D_{R}(x^{*}, x(T)) - D_{R}(x(T), x^{*}) \\
-&\hspace{3.0cm} 
-- D_{R^{*}}(u^{*}, u(0)) + D_{R}(x^{*}, x(0)) + D_{R}(x(0), x^{*}) \bigr]\,.
+%&\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x^{*})] dt \\
+%&\hspace{1.5cm}
+%\leq \frac{1}{\eta} \bigl[ D_{R^{*}}(u^{*}, u(T)) - D_{R}(x^{*}, x(T)) - D_{R}(x(T), x^{*}) \\
+%&\hspace{3.0cm} 
+%- D_{R^{*}}(u^{*}, u(0)) + D_{R}(x^{*}, x(0)) + D_{R}(x(0), x^{*}) \bigr]\,.
+%
+\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x')] dt 
+\leq \frac{ D_{R}(x', x(0)) - D_{R}(x', x(T)) }{\eta}\,.
 \addtocounter{equation}{1}
 \label{eq.bound.first}  \tag{\theequation}
 \end{align*}
@@ -168,102 +203,8 @@ Hence, the above result is applicable to both MD and FTRL in this case.
 However, when $R$ is not Legendre (constrained case), they will generally be different.
 
 
-
-
-\section*{Some more calculations...}
-
-Based on the approach of \cite{Kwon-M}.
-
-\bigskip
-
-\noindent
-From \eqref{eq.ctime.1} we have
-$$
-u(t) - u(0) = \int_{0}^{t} \dot{u}(s) ds = -\eta \int_{0}^{t} \nabla\ell_{s}(x(s)) ds.
-$$
-Then for a fixed $x$,
-\begin{equation}
-\int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x}
-= \frac{\ab{u(t) - u(0), x}}{\eta}
-\leq \frac{R^{*}(u(t)) + R(x) - \ab{u(0),x}}{\eta}\,.
-\label{eq.using.fenchel.ineq}
-\end{equation}
-But noting from \eqref{eq.ctime.2} that $x(t) = \nabla R^{*}(u(t))$, 
-which means that $x(t)$ is the optimizer in the definition of $R^{*}$, 
-then
-\begin{align}
-\frac{R^{*}(u(t))}{\eta}
-&= \frac{\ab{u(t), x(t)} - R(x(t))}{\eta} \notag \\[1mm]
-&= \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(t)} ds + \frac{\ab{u(0),x(t)}-R(x(t))}{\eta}\,.
-\label{eq.something}
-\end{align}
-Consider the function $\varphi(t,x) = \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x} ds$.
-In particular, replacing $x$ with $x(t)$ we have
-$$
-\varphi(t,x(t)) = \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(t)} ds.
-$$
-The time derivative is
-\begin{align*}
-\frac{d}{dt}\varphi(t,x(t))
-%&= \dot{\varphi}(t,x(t)) + \frac{\partial}{\partial x} \varphi(t,x(t)) \cdot \dot{x}(t) \\
-&= \ab{-\nabla\ell_{t}(x(t)), x(t)} + \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), \dot{x}(t)} ds \\
-&= \ab{-\nabla\ell_{t}(x(t)), x(t)} + \frac{1}{\eta} \ab{u(t) - u(0), \dot{x}(t)} \\
-&= \ab{-\nabla\ell_{t}(x(t)), x(t)} + \frac{1}{\eta} \frac{d}{dt} D_{R^{*}}(u(0), u(t)) \,,
-\end{align*}
-where in the last step we used \eqref{eq.deriv.diver.dual} with $u(0)$ instead of $u^{*}$.
-Then integrating
-(note that $\varphi(0,x) = 0$ for any $x$, and $D_{R^{*}}(u(0), u(0)) = 0$) 
-we get
-\begin{align*}
-\varphi(t,x(t)) 
-&= \int_{0}^{t} \frac{d}{ds} \varphi(s,x(s)) ds \\
-&= \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(s)} ds 
-     + \frac{1}{\eta} D_{R^{*}}(u(0), u(t)) \,.
-\end{align*}
-Then, continuing from \eqref{eq.using.fenchel.ineq} and \eqref{eq.something},
-and rearranging, we get
-\begin{align*}
-&\int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x(s)} ds - \int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x} ds \\
-&\hspace{1.5cm}
-\leq \frac{1}{\eta} \Bigl[ R(x) - R(x(t)) - \ab{u(0), x - x(t)} + D_{R^{*}}(u(0), u(t)) \Bigr]\,.
-\addtocounter{equation}{1}
-\label{eq.bound.shaping}  \tag{\theequation}
-\end{align*}
-Note that $u(0) = \nabla R(x(0))$. We have
-\begin{align*}
-&R(x) - R(x(t)) - \ab{u(0), x - x(t)} \\[1mm]
-&\hspace{1.5cm}
-= R(x) - R(x(t)) - \ab{\nabla R(x(0)), x - x(t)} \\[1mm]
-&\hspace{1.5cm}
-= R(x) - R(x(0)) - \ab{\nabla R(x(0)), x - x(0)} \\
-&\hspace{2.5cm}
-   + R(x(0)) - R(x(t)) - \ab{\nabla R(x(0)), x(0) - x(t)} \\[1mm]
-&\hspace{1.5cm}
-= D_{R}(x,x(0)) + D_{R}(x(0),x(t))\,.
-\end{align*}
-Using this in \eqref{eq.bound.shaping} we get
-\begin{align*}
-&\int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x(s)} ds - \int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x} ds \\
-&\hspace{1.5cm}
-\leq \frac{1}{\eta} \Bigl[ D_{R}(x,x(0)) + D_{R}(x(0),x(t)) + D_{R^{*}}(u(0), u(t)) \Bigr]\,.
-\end{align*}
-Finally, using the linearization trick (see \eqref{eq.linearizing.loss} above),
-\begin{align*}
-&\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x^{*})] dt
-\leq \int_{0}^{T} \ab{\nabla\ell_{t}(x(t)), x(t) - x} dt \\
-&\hspace{2.0cm}
-\leq \frac{1}{\eta} \Bigl[ D_{R}(x,x(0)) + D_{R}(x(0),x(T)) + D_{R^{*}}(u(0), u(T)) \Bigr]\,.
-\addtocounter{equation}{1}
-\label{eq.bound.new}  \tag{\theequation}
-\end{align*}
-
 \medskip
 
-Note: compare \eqref{eq.bound.new} with the first bound \eqref{eq.bound.first}.
-
-
-
-\newpage
 
 \section*{Equivalence between FTRL and MD}
 
@@ -306,6 +247,282 @@ These are clearly the equations \eqref{eq.dtime.1}--\eqref{eq.dtime.2} of MD.
 
 Conversely, starting from the equations \eqref{eq.dtime.1}--\eqref{eq.dtime.2} of MD,
 we can revert the process and obtain the equations \eqref{eq.ftrl1}--\eqref{eq.ftrl2} of FTRL.
+
+
+\medskip
+
+
+\section*{Continuous time analysis}
+
+Based on the approach of \cite[Section 4]{Kwon-M}.
+For the time being using a notation closer to theirs but not conflicting with ours.
+Keeping a constant learning rate $\eta > 0$, their process looks like this:
+\begin{align*}
+x(t) = \nabla R^{*} \Bigl( \eta \int_{0}^{t} v(s) ds \Bigr).
+\end{align*}
+In this setting, $v(s) = -\nabla \ell_{s}(x(s))$ in the case of differentiable loss functions,
+or more generally $v(s) \in \partial (-\ell_{s}(x(s)))$ is a `negative sub-gradient'
+when only convexity but no differentiability is assumed on the loss functions.
+
+\medskip
+
+Setting $y(t) = \eta \int_{0}^{t} v(s) ds$, the above process can be presented as
+\begin{align*}
+\dot{y}(t) &= \eta v(t) \label{eq.cta.1} \tag{1ct'} \\
+x(t) &= \nabla R^{*}(y(t))\,. \label{eq.cta.2} \tag{2ct'}
+\end{align*}
+Then for a fixed $x$,
+\begin{equation}
+\int_{0}^{t} \ab{v(s), x} ds
+= \frac{\ab{y(t), x}}{\eta}
+\leq \frac{R^{*}(y(t)) + R(x)}{\eta}\,.
+\label{eq.cta.using.fenchel.ineq}
+\end{equation}
+But noting from \eqref{eq.cta.2} that $\nabla R (x(t)) = y(t)$, 
+which means that $x(t)$ and $y(t)$ satisfy equality in the Fenchel inequality,
+then
+\begin{align}
+\frac{R^{*}(y(t))}{\eta}
+= \frac{\ab{y(t), x(t)} - R(x(t))}{\eta} 
+= \int_{0}^{t} \ab{v(s), x(t)} ds - \frac{R(x(t))}{\eta}\,.
+\label{eq.cta.something}
+\end{align}
+Consider the function $\varphi(t,x) = \int_{0}^{t} \ab{v(s), x} ds - R(x)/\eta$.
+Its partial derivatives are $\partial_{t} \varphi(t,x) = \ab{v(t),x}$ and
+$\partial_{x} \varphi(t,x) = y(t) - \nabla R(x)/\eta$.
+Replacing $x$ with $x(t)$ we have 
+$$
+\varphi(t,x(t)) = \int_{0}^{t} \ab{v(s), x(t)} ds - \frac{R(x(t))}{\eta}\,.
+$$
+The time derivative of this is
+\begin{align*}
+\frac{d}{dt}\varphi(t,x(t))
+= \partial_{t}\varphi(t,x(t)) + \ab{\partial_{x} \varphi(t,x(t)), \dot{x}(t)}
+= \ab{v(t), x(t)}\,.
+\end{align*}
+Notice that $\partial_{x} \varphi(t,x(t)) = y(t) - \nabla R(x(t))/\eta = 0$ because of \eqref{eq.cta.2}.
+Using this in \eqref{eq.cta.something}:
+\begin{align*}
+\frac{d}{dt} \frac{R^{*}(y(t))}{\eta}
+= \frac{d}{dt}\varphi(t,x(t))
+= \ab{v(t), x(t)}\,,
+\end{align*}
+and integrating:
+\begin{align*}
+\frac{R^{*}(y(t)) - R^{*}(y(0))}{\eta}
+= \int_{0}^{t} \ab{v(s), x(s)} ds\,.
+\end{align*}
+Then, continuing from \eqref{eq.cta.using.fenchel.ineq},
+and rearranging, we get
+\begin{align*}
+\int_{0}^{t} \ab{v(x), x} ds - \int_{0}^{t} \ab{v(s), x(s)} ds 
+\leq \frac{R(x) + R^{*}(y(0))}{\eta}\,.
+\addtocounter{equation}{1}
+\label{eq.cta.bound.shaping}  \tag{\theequation}
+\end{align*}
+Note that $R^{*}(y(0)) = R^{*}(0) = - R_{\text{min}}$. 
+Finally, using the linearization trick (see \eqref{eq.linearizing.loss} above),
+and recall that $v(s) \in \partial (-\ell_{s}(x(s)))$ is a negative sub-gradient,
+we get
+\begin{align*}
+\int_{0}^{t} [\ell_{s}(x(s)) - \ell_{s}(x)] ds
+\leq \int_{0}^{t} \ab{v(s), x - x(s)} ds 
+\leq \frac{R(x) - R_{\text{min}}}{\eta}\,.
+\end{align*}
+Of course we could upper bound $R(x)$ by $R_{\text{max}}$ which
+would give us the exactly the upper bound of \cite{Kwon-M}:
+\begin{align*}
+\int_{0}^{t} [\ell_{s}(x(s)) - \ell_{s}(x)] ds
+\leq \int_{0}^{t} \ab{v(s), x - x(s)} ds 
+\leq \frac{R_{\text{max}} - R_{\text{min}}}{\eta}\,.
+\addtocounter{equation}{1}
+\label{eq.cta.bound}  \tag{\theequation}
+\end{align*}
+
+\medskip
+
+
+\section*{Discrete time analysis}
+
+Continuing as in \cite[Section 5]{Kwon-M}.
+Consider the discrete-time updates
+\begin{align*}
+y_{t+1} &= y_{t} - \eta v_{t}\,, \label{eq.dta.1} \tag{1dt'} \\
+x_{t+1} &= \nabla R^{*}(y_{t+1})\,. \label{eq.dta.2} \tag{2dt'}
+\end{align*}
+These are the discrete-time counterparts of \eqref{eq.cta.1}--\eqref{eq.cta.2} form
+the previous section. As in \cite{Kwon-M}, let's start by embedding the discrete-time process
+$(v_{t})_{t \geq 0}$ into a continuous-time stream $v(t)$ by setting
+\begin{equation}
+v(t) = v_{\lceil t \rceil},\hspace{7mm} t \in [0,\infty)\,.
+\label{eq.dt.to.ct.embed}
+\end{equation}
+We will derive a regret bound for the strategy \eqref{eq.dta.1}--\eqref{eq.dta.2}.
+The bound will consist of a term coming form the continuous time analysis of the previous section 
+applied to the continuous stream \eqref{eq.dt.to.ct.embed}, 
+plus a term accounting for a comparison between the discrete and continuous time processes.
+
+\medskip
+
+Assume we have a $K$-strongly convex regularizer $R$.
+Denoting as before $x(t) = \nabla R^{*} (y(t))$ and $y(t) = \eta \int_{0}^{t} v(s) ds$,
+we have
+$$
+x_{t} = \nabla R^{*} \Bigl( \eta \sum_{k=1}^{t-1} v_{k} \Bigr) = x(t-1).
+$$
+Note that $x_t$ on the left is the value of the discrete-time process at stage $t$,
+while $x(t-1)$ in the right is the continuous-time process at time $t-1$.
+
+\medskip
+
+For any discrete time $k \geq 1$ and for any continuous time $t \in (k-1,k)$,
+the difference between the (linearized) losses is upper bounded as follows:
+\begin{align*}
+\abs{ \ab{v(t),x(t)} - \ab{v_{k},x_{k}} }
+&= \abs{ \ab{v_{k}, x(t) - x(k-1)} } \\[1.5mm]
+&\leq \norm{v_{k}}_{*} \norm{ \nabla R^{*}(y(t)) - \nabla R^{*}(y(k-1)) } \\
+&\leq \frac{1}{K} \norm{v_{k}}_{*} \norm{y(t) - y(k-1)}_{*}\,.
+\end{align*}
+The last step used that $\nabla R^{*}$ is $(1/K)$-Lipschitz,
+which is a consequence of (in fact equivalent to) the $K$-strong convexity of $R$.
+But the last term can be bounded as follows:
+$$
+\norm{y(t) - y(k-1)}_{*}
+= \Bignorm{ \eta \int_{k-1}^{t} v(s) ds }
+\leq \eta (t-k+1) \norm{v(k)}_{*}\,.
+$$
+Therefore, we get the promised comparison between the discrete and the continuous time
+(linearized) losses:
+\begin{align*}
+\Bigabs{ \int_{0}^{t} \ab{v(s),x(s)} ds - \sum_{k=1}^{t} \ab{v_{k},x_{k}} }
+&\leq \sum_{k=1}^{t} \int_{k-1}^{k} \bigabs{ \ab{v(s),x(s)} - \ab{v_{k},x_{k}} } ds \\
+&\leq \frac{\eta}{K} \sum_{k=1}^{t} \norm{v_{k}}_{*} \norm{v(k)}_{*} \int_{k-1}^{k} (s-k+1) ds \\
+&= \frac{\eta}{2K} \sum_{k=1}^{t} \norm{v_{k}}_{*}^2\,.
+\end{align*}
+
+
+Now, for a fixed arbitrary $x$, we get
+\begin{align*}
+\sum_{k=1}^{t} \ab{v_{k},x}
+= \int_{0}^{t} \ab{v(s), x} ds 
+&\leq \int_{0}^{t} \ab{v(s), x(s)} ds + \frac{R_{\text{max}} - R_{\text{min}}}{\eta} \\
+&\leq \sum_{k=1}^{t} \ab{v_{k},x_{k}} + \frac{\eta}{2K} \sum_{k=1}^{t} \norm{v_{k}}_{*}^2 
+     + \frac{R_{\text{max}} - R_{\text{min}}}{\eta}\,.
+\end{align*}
+The first inequality is from \eqref{eq.cta.bound} and the second inequality
+from the above continuous/discrete time comparison for the linearized losses.
+Finally, using linearization of the original losses (in discrete time) we get
+\begin{align*}
+\sum_{k=1}^{t} \ell_{k}(x_{k}) - \sum_{k=1}^{t} \ell_{k}(x)
+&\leq \sum_{k=1}^{t} \ab{v_{k},x - x_{k}} \\
+&\leq \frac{R_{\text{max}} - R_{\text{min}}}{\eta} + \frac{\eta}{2K} \sum_{k=1}^{t} \norm{v_{k}}_{*}^2\,.
+\end{align*}
+
+In particular, is $\norm{v_{k}}_{*} \leq M$ for all $k$ (and some $M > 0$),
+then optimizing over $\eta$ we get a regret bound that looks like
+$$
+\sqrt{2M^2(R_{\text{max}} - R_{\text{min}}) \ t/K}\,.
+$$
+
+
+\medskip
+
+
+\section*{Another continuous time analysis (?)}
+
+Kind of based on the approach of \cite{Kwon-M} too, but some modifications.
+This is the stuff I had written before, keeping it here for the time being just because.
+
+\bigskip
+
+\noindent
+From \eqref{eq.ctime.1} we have
+$$
+u(t) - u(0) = \int_{0}^{t} \dot{u}(s) ds = -\eta \int_{0}^{t} \nabla\ell_{s}(x(s)) ds.
+$$
+Then for a fixed $x$,
+\begin{equation}
+\int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x} ds
+= \frac{\ab{u(t) - u(0), x}}{\eta}
+\leq \frac{R^{*}(u(t)) + R(x) - \ab{u(0),x}}{\eta}\,.
+\label{eq.using.fenchel.ineq}
+\end{equation}
+But noting from \eqref{eq.ctime.2} that $x(t) = \nabla R^{*}(u(t))$, 
+which means that $x(t)$ is the optimizer in the definition of $R^{*}$, 
+then
+\begin{align}
+\frac{R^{*}(u(t))}{\eta}
+&= \frac{\ab{u(t), x(t)} - R(x(t))}{\eta} \notag \\[1mm]
+&= \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(t)} ds + \frac{\ab{u(0),x(t)}-R(x(t))}{\eta}\,.
+\label{eq.something}
+\end{align}
+Consider the function $\varphi(t,x) = \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x} ds$.
+In particular, replacing $x$ with $x(t)$ we have
+$$
+\varphi(t,x(t)) = \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(t)} ds.
+$$
+The time derivative is
+\begin{align*}
+\frac{d}{dt}\varphi(t,x(t))
+%&= \dot{\varphi}(t,x(t)) + \frac{\partial}{\partial x} \varphi(t,x(t)) \cdot \dot{x}(t) \\
+&= \ab{-\nabla\ell_{t}(x(t)), x(t)} + \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), \dot{x}(t)} ds \\
+&= \ab{-\nabla\ell_{t}(x(t)), x(t)} + \frac{1}{\eta} \ab{u(t) - u(0), \dot{x}(t)} \\
+&= \ab{-\nabla\ell_{t}(x(t)), x(t)} + \frac{1}{\eta} \frac{d}{dt} D_{R}(x(t), x(0)) \,,
+\end{align*}
+where in the last step we used \eqref{eq.deriv.diver.dual} with $x(0)$ instead of $x'$.
+Then integrating
+(note that $\varphi(0,x) = 0$ for any $x$, and $D_{R}(x(0), x(0)) = 0$) 
+we get
+\begin{align*}
+\varphi(t,x(t)) 
+&= \int_{0}^{t} \frac{d}{ds} \varphi(s,x(s)) ds \\
+&= \int_{0}^{t} \ab{-\nabla\ell_{s}(x(s)), x(s)} ds 
+     + \frac{1}{\eta} D_{R}(x(t), x(0)) \,.
+\end{align*}
+Then, continuing from \eqref{eq.using.fenchel.ineq} and \eqref{eq.something},
+and rearranging, we get
+\begin{align*}
+&\int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x(s)} ds - \int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x} ds \\
+&\hspace{1.5cm}
+\leq \frac{1}{\eta} \Bigl[ R(x) - R(x(t)) - \ab{u(0), x - x(t)} + D_{R}(x(t), x(0)) \Bigr]\,.
+\addtocounter{equation}{1}
+\label{eq.bound.shaping}  \tag{\theequation}
+\end{align*}
+Note that $u(0) = \nabla R(x(0))$. We have
+\begin{align*}
+&R(x) - R(x(t)) - \ab{u(0), x - x(t)} \\[1mm]
+&\hspace{1.5cm}
+= R(x) - R(x(t)) - \ab{\nabla R(x(0)), x - x(t)} \\[1mm]
+&\hspace{1.5cm}
+= R(x) - R(x(0)) - \ab{\nabla R(x(0)), x - x(0)} \\
+&\hspace{2.5cm}
+   + R(x(0)) - R(x(t)) - \ab{\nabla R(x(0)), x(0) - x(t)} \\[1mm]
+&\hspace{1.5cm}
+= D_{R}(x,x(0)) + D_{R}(x(0),x(t))\,.
+\end{align*}
+Using this in \eqref{eq.bound.shaping} we get
+\begin{align*}
+&\int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x(s)} ds - \int_{0}^{t} \ab{\nabla\ell_{s}(x(s)), x} ds \\
+&\hspace{1.5cm}
+\leq \frac{1}{\eta} \Bigl[ D_{R}(x,x(0)) + D_{R}(x(0),x(t)) + D_{R}(x(t), x(0)) \Bigr]\,.
+\end{align*}
+Finally, using the linearization trick (see \eqref{eq.linearizing.loss} above), we get
+\begin{align*}
+&\int_{0}^{T} [\ell_{t}(x(t)) - \ell_{t}(x)] dt
+\leq \int_{0}^{T} \ab{\nabla\ell_{t}(x(t)), x(t) - x} dt \\
+&\hspace{2.0cm}
+\leq \frac{1}{\eta} \Bigl[ D_{R}(x,x(0)) + D_{R}(x(0),x(T)) + D_{R}(x(T), x(0)) \Bigr]\,.
+\addtocounter{equation}{1}
+\label{eq.bound.new}  \tag{\theequation}
+\end{align*}
+
+\medskip
+
+\noindent
+Note: Comparing, the first bound \eqref{eq.bound.first} clearly beats this
+`new' bound \eqref{eq.bound.new}.
+
+
 
 \medskip
 
