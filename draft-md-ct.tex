@@ -9,6 +9,10 @@
 \usepackage{mathdef-omar}
 \usepackage{enumitem}
 
+\usepackage[textsize=tiny]{todonotes}
+\setlength{\marginparwidth}{15ex}
+\newcommand{\todoc}[2][]{\todo[size=\scriptsize,color=blue!20!white,#1]{Csaba: #2}}
+\newcommand{\todoo}[2][]{\todo[size=\scriptsize,color=red!20!white,#1]{Omar: #2}}
 
 % ========== Pstricks
 %\usepackage{pst-all}
@@ -409,7 +413,9 @@ Now, for a fixed arbitrary $x$, we get
 &\leq \sum_{k=1}^{t} \ab{v_{k},x_{k}} + \frac{\eta}{2K} \sum_{k=1}^{t} \norm{v_{k}}_{*}^2 
      + \frac{R_{\text{max}} - R_{\text{min}}}{\eta}\,.
 \end{align*}
-The first inequality is from \eqref{eq.cta.bound} and the second inequality
+The first inequality is from \eqref{eq.cta.bound} \todoc{Why can this be applied?
+Does $(x(t),y(t))_{t}$ satisfy \eqref{eq.cta.1}--\eqref{eq.cta.2}? Any other conditions?}
+and the second inequality
 from the above continuous/discrete time comparison for the linearized losses.
 Finally, using linearization of the original losses (in discrete time) we get
 \begin{align*}
