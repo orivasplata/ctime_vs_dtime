@@ -343,8 +343,8 @@ would give us the exactly the upper bound of \cite{Kwon-M}:
 \label{eq.cta.bound}  \tag{\theequation}
 \end{align*}
 
-\medskip
 
+\medskip
 
 \section*{Discrete time analysis}
 
@@ -361,6 +361,19 @@ $(v_{t})_{t \geq 0}$ into a continuous-time stream $v(t)$ by setting
 v(t) = v_{\lceil t \rceil},\hspace{7mm} t \in [0,\infty)\,.
 \label{eq.dt.to.ct.embed}
 \end{equation}
+Based on the continuous-time stream $v(t)$ we define
+$y(t) = \eta \int_{0}^{t} v(s) ds$ 
+and $x(t) = \nabla R^{*} (y(t))$. \todoo{$(x(t),y(t))$ defined from $(x_{t},y_{t})$.}
+Then by construction $x(t)$ and $y(t)$ satisfy \eqref{eq.cta.1}--\eqref{eq.cta.2}.
+When $t = k$ is an integer, we have 
+$y(t) = \eta \int_{0}^{t} v(s) ds = \eta \sum_{j=1}^{k} v_{j} = y_{k+1}$,
+so then $y(t) - y(t-1) = y_{k+1} - y_{k} = -\eta v_{k}$
+and $x(t) = \nabla R^{*} (y(t)) = \nabla R^{*} (y_{k+1})$.
+The pair $(x(t),y(t))$ \todoo{makes sense?}
+satisfies \eqref{eq.dta.1}--\eqref{eq.dta.2} at integer times $t$.
+
+\medskip
+
 We will derive a regret bound for the strategy \eqref{eq.dta.1}--\eqref{eq.dta.2}.
 The bound will consist of a term coming form the continuous time analysis of the previous section 
 applied to the continuous stream \eqref{eq.dt.to.ct.embed}, 
@@ -368,9 +381,9 @@ plus a term accounting for a comparison between the discrete and continuous time
 
 \medskip
 
-Assume we have a $K$-strongly convex regularizer $R$.
-Denoting as before $x(t) = \nabla R^{*} (y(t))$ and $y(t) = \eta \int_{0}^{t} v(s) ds$,
-we have
+Assume $R$ is a $K$-strongly convex regularizer.
+%Denoting as before $x(t) = \nabla R^{*} (y(t))$ and $y(t) = \eta \int_{0}^{t} v(s) ds$,
+We have
 $$
 x_{t} = \nabla R^{*} \Bigl( \eta \sum_{k=1}^{t-1} v_{k} \Bigr) = x(t-1).
 $$
@@ -420,8 +433,8 @@ from the above continuous/discrete time comparison for the linearized losses.
 Finally, using linearization of the original losses (in discrete time) we get
 \begin{align*}
 \sum_{k=1}^{t} \ell_{k}(x_{k}) - \sum_{k=1}^{t} \ell_{k}(x)
-&\leq \sum_{k=1}^{t} \ab{v_{k},x - x_{k}} \\
-&\leq \frac{R_{\text{max}} - R_{\text{min}}}{\eta} + \frac{\eta}{2K} \sum_{k=1}^{t} \norm{v_{k}}_{*}^2\,.
+\leq \sum_{k=1}^{t} \ab{v_{k},x - x_{k}} 
+\leq \frac{R_{\text{max}} - R_{\text{min}}}{\eta} + \frac{\eta}{2K} \sum_{k=1}^{t} \norm{v_{k}}_{*}^2\,.
 \end{align*}
 
 In particular, is $\norm{v_{k}}_{*} \leq M$ for all $k$ (and some $M > 0$),
@@ -432,7 +445,6 @@ $$
 
 
 \medskip
-
 
 \section*{Another continuous time analysis (?)}
 
